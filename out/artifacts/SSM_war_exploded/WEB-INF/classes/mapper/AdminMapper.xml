@@ -7,7 +7,7 @@
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
-      <foreach  collection="oredCriteria" item="criteria" separator="or" >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
         <if test="criteria.valid" >
           <trim prefix="(" suffix=")" prefixOverrides="and" >
             <foreach collection="criteria.criteria" item="criterion" >
@@ -109,18 +109,18 @@
       </if>
     </trim>
   </insert>
+  <select id="selectByName" parameterType="entity.Admin" resultType="entity.Admin">
+    SELECT
+    <include refid="Base_Column_List" />
+    from admin where adminName = #{adminName}
+  </select>
   <select id="countByExample" parameterType="entity.AdminExample" resultType="java.lang.Integer" >
     select count(*) from admin
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <select id="selectByName" parameterType="entity.Admin" resultType="entity.Admin">
-    SELECT
-    <include refid="Base_Column_List" />
-    from admin where adminName = #{adminName}
-  </select>
-  <update id="updateByExampleSelective"  parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map" >
     update admin
     <set >
       <if test="record.adminname != null" >
