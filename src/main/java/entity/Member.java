@@ -7,7 +7,7 @@ public class Member {
 
     private String membername;
 
-    private Integer phonenumber;
+    private String phonenumber;
 
     private String membernumber;
 
@@ -39,11 +39,11 @@ public class Member {
         this.membername = membername == null ? null : membername.trim();
     }
 
-    public Integer getPhonenumber() {
+    public String getPhonenumber() {
         return phonenumber;
     }
 
-    public void setPhonenumber(Integer phonenumber) {
+    public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
     }
 

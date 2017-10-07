@@ -15,9 +15,13 @@ public interface MemberMapper {
 
     int insert(Member record);
 
+    Member selectByNumber(String Number);
+
     int insertSelective(Member record);
 
     List<Member> selectByExample(MemberExample example);
+
+    List<Member> selectBy(Member member);
 
     Member selectByPrimaryKey(Integer id);
 

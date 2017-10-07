@@ -29,5 +29,21 @@ public class ManagerController {
         return adminService.submitMember(memberNum , userName ,  phoneNum, sex, balance, birthday, remarks);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/motifyMember",produces={"text/html;charset=UTF-8;","application/json;"})
+    public String motifyMember(String  memberNum ,String userName ,String  phoneNum,String sex,String balance,String birthday,String remarks){
+        return adminService.submitMember(memberNum , userName ,  phoneNum, sex, balance, birthday, remarks);
+    }
+
+    @RequestMapping(value = "/seeMember",produces={"text/html;charset=UTF-8;","application/json;"})
+    public String seeMember(){
+        return "manager/seeMember";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/sumbitSearch",produces={"text/html;charset=UTF-8;","application/json;"})
+    public String sumbitSearch(String  num ,String mName ,String  phone){
+        return adminService.sumbitSearch(num,mName,phone);
+    }
+
 }
 

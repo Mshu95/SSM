@@ -89,11 +89,42 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectBy" resultMap="BaseResultMap" parameterType="entity.Member" >
+    select
+    <include refid="Base_Column_List" />
+    from member where 1=1
+    <if test="membernumber != null and !&quot;&quot;.equals(membernumber.trim())" >
+      and memberNumber LIKE '%' #{membernumber} '%'
+    </if>
+    <if test="phonenumber != null and !&quot;&quot;.equals(phonenumber.trim())" >
+      and phoneNumber LIKE '%' #{phonenumber} '%'
+    </if>
+    <if test="membernumber != null and !&quot;&quot;.equals(membernumber.trim())">
+      and memberName LIKE '%' #{membername} '%'
+    </if>
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from member
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from member
+    where memberNumber = #{memberNumber,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from member

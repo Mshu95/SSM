@@ -62,7 +62,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">管理会员</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">修改会员资料</a></dd>
                         <dd><a href="javascript:;">列表二</a></dd>
                         <dd><a href="">超链接</a></dd>
                     </dl>
@@ -76,8 +76,10 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <iframe  id="iframe_div" src="/admin/addMember">
-            </iframe>
+            <%--<iframe  id="iframe_div" src="/admin/addMember">--%>
+            <%--</iframe>--%>
+                <iframe  id="iframe_div" src="/admin/seeMember">
+                </iframe>
         </div>
     </div>
 
