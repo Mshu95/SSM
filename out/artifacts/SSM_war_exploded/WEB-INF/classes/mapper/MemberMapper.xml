@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.MemberMapper" >
+  <resultMap id="BaseResultMap" type="entity.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="memberName" property="membername" jdbcType="VARCHAR" />
+    <result column="phoneNumber" property="phonenumber" jdbcType="INTEGER" />
+    <result column="memberNumber" property="membernumber" jdbcType="VARCHAR" />
+    <result column="consumptionSum" property="consumptionsum" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="INTEGER" />
+    <result column="registDate" property="registdate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birthDate" property="birthdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, memberName, phoneNumber, memberNumber, consumptionSum, balance, registDate, remarks, 
+    sex, birthDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="entity.MemberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectBy" resultMap="BaseResultMap" parameterType="entity.Member" >
+    select
+    <include refid="Base_Column_List" />
+    from member where 1=1
+    <if test="membernumber != null and !&quot;&quot;.equals(membernumber.trim())" >
+      and memberNumber LIKE '%' #{membernumber} '%'
+    </if>
+    <if test="phonenumber != null and !&quot;&quot;.equals(phonenumber.trim())" >
+      and phoneNumber LIKE '%' #{phonenumber} '%'
+    </if>
+    <if test="membernumber != null and !&quot;&quot;.equals(membernumber.trim())">
+      and memberName LIKE '%' #{membername} '%'
+    </if>
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from member
+    where memberNumber = #{memberNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="entity.MemberExample" >
+    delete from member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="entity.Member" >
+    insert into member (id, memberName, phoneNumber, 
+      memberNumber, consumptionSum, balance, 
+      registDate, remarks, sex, 
+      birthDate)
+    values (#{id,jdbcType=INTEGER}, #{membername,jdbcType=VARCHAR}, #{phonenumber,jdbcType=INTEGER}, 
+      #{membernumber,jdbcType=VARCHAR}, #{consumptionsum,jdbcType=INTEGER}, #{balance,jdbcType=INTEGER}, 
+      #{registdate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{birthdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Member" >
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membername != null" >
+        memberName,
+      </if>
+      <if test="phonenumber != null" >
+        phoneNumber,
+      </if>
+      <if test="membernumber != null" >
+        memberNumber,
+      </if>
+      <if test="consumptionsum != null" >
+        consumptionSum,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="registdate != null" >
+        registDate,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthdate != null" >
+        birthDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="membername != null" >
+        #{membername,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        #{phonenumber,jdbcType=INTEGER},
+      </if>
+      <if test="membernumber != null" >
+        #{membernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="consumptionsum != null" >
+        #{consumptionsum,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="registdate != null" >
+        #{registdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        #{birthdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="entity.MemberExample" resultType="java.lang.Integer" >
+    select count(*) from member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update member
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.membername != null" >
+        memberName = #{record.membername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonenumber != null" >
+        phoneNumber = #{record.phonenumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.membernumber != null" >
+        memberNumber = #{record.membernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumptionsum != null" >
+        consumptionSum = #{record.consumptionsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=INTEGER},
+      </if>
+      <if test="record.registdate != null" >
+        registDate = #{record.registdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthdate != null" >
+        birthDate = #{record.birthdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update member
+    set id = #{record.id,jdbcType=INTEGER},
+      memberName = #{record.membername,jdbcType=VARCHAR},
+      phoneNumber = #{record.phonenumber,jdbcType=INTEGER},
+      memberNumber = #{record.membernumber,jdbcType=VARCHAR},
+      consumptionSum = #{record.consumptionsum,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=INTEGER},
+      registDate = #{record.registdate,jdbcType=TIMESTAMP},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      birthDate = #{record.birthdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Member" >
+    update member
+    <set >
+      <if test="membername != null" >
+        memberName = #{membername,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        phoneNumber = #{phonenumber,jdbcType=INTEGER},
+      </if>
+      <if test="membernumber != null" >
+        memberNumber = #{membernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="consumptionsum != null" >
+        consumptionSum = #{consumptionsum,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="registdate != null" >
+        registDate = #{registdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        birthDate = #{birthdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Member" >
+    update member
+    set memberName = #{membername,jdbcType=VARCHAR},
+      phoneNumber = #{phonenumber,jdbcType=INTEGER},
+      memberNumber = #{membernumber,jdbcType=VARCHAR},
+      consumptionSum = #{consumptionsum,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=INTEGER},
+      registDate = #{registdate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthDate = #{birthdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
