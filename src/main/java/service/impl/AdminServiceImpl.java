@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.sun.tracing.dtrace.Attributes;
 import entity.Admin;
 import entity.Member;
+import entity.Page;
 import entity.Record;
 import mapper.AdminMapper;
 import mapper.MemberMapper;
@@ -114,7 +115,12 @@ public class AdminServiceImpl implements AdminService {
         }
         try{
             List<Member> list = memberMapper.selectBy(member);
-            return JSONArray.parseArray(JSON.toJSONString(list)).toString();
+            Page page =  new Page();
+            page.setCode(0);
+            page.setCount(1000);
+            page.setMsg("hi");
+            page.setData(list);
+            return JSON.toJSONString(page);
         }catch (Exception e){
             System.out.println(e);
         }

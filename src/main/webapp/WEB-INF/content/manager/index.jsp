@@ -75,7 +75,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
+        <%--<div style="padding: 15px;">--%>
             <%--<iframe  id="iframe_div" src="/admin/addMember">--%>
             <%--</iframe>--%>
                 <iframe  id="iframe_div" src="/admin/seeMember">

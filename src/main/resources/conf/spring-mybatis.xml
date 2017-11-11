@@ -22,7 +22,7 @@
 		p:driverClass="com.mysql.jdbc.Driver"
 		p:jdbcUrl="jdbc:mysql://127.0.0.1:3306/fortune"
 		p:user="root"
-		p:password="1234"
+		p:password="123456"
 		p:maxPoolSize="40"
 		p:minPoolSize="2"
 		p:initialPoolSize="2"

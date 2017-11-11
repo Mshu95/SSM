@@ -7,7 +7,6 @@
           <element id="module-output" name="SSM" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: log4j:log4j:1.2.16" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.28" />
           <element id="library" level="project" name="Maven: com.mchange:c3p0:0.9.5-pre2" />
           <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.5" />
@@ -47,6 +46,7 @@
           <element id="library" level="project" name="Maven: org.mybatis.generator:mybatis-generator-core:1.3.2" />
         </element>
       </element>
+      <element id="library" level="project" name="Maven: log4j:log4j:1.2.16" />
       <element id="javaee-facet-resources" facet="SSM/web/Web" />
     </root>
   </artifact>
