@@ -8,14 +8,18 @@
             width: 90%;
             margin: 20px auto;
         }
-        .layui-border-box{
+
+        .layui-border-box {
             width: auto !important;
+            height: auto !important;
         }
-        .layui-table{
+
+        .layui-table {
             width: 100%;
         }
-        .layui-table-cell{
-            text-align: center;
+
+        .layui-table-body{
+            height: auto !important;
         }
     </style>
 </head>
@@ -44,95 +48,58 @@
 </div>
 <div class="layui-inline">
     <div class="layui-input-block">
-        <button class="layui-btn" id="submit_search" lay-submit="" lay-filter="demo1">查找</button>
+        <button class="layui-btn" id="submit_search" data-type="reload" lay-submit="" lay-filter="demo1">查找</button>
     </div>
 </div>
-<div class="layui-btn-group demoTable">
-    <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-    <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-    <button class="layui-btn" data-type="isAll">验证是否全选</button>
-</div>
-<table class="layui-table" lay-data="{width: 892, height:332, url:'/admin/sumbitSearch', page:true, id:'idTest'}" lay-filter="demo">
-    <thead>
-    <tr>
-        <th lay-data="{checkbox:true, fixed: true}"></th>
-        <th lay-data="{field:'id', width:64, sort: true, fixed: true}">ID</th>
-        <th lay-data="{field:'membernumber', width:130,  sort: true}">会员编号</th>
-        <th lay-data="{field:'membername', width:120}">会员姓名</th>
-        <th lay-data="{field:'phonenumber', width:120}">手机号</th>
-        <th lay-data="{field:'registdate', width:120, sort: true}">注册日期</th>
-        <th lay-data="{field:'sex', width:80, sort: true}">性别</th>
-        <th lay-data="{field:'birthdate', width:120, sort: true}">出生日期</th>
-        <th lay-data="{field:'balance', width:135, sort: true}">余额</th>
-        <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}"></th>
-    </tr>
-    </thead>
-</table>
-
+<%--<div class="layui-btn-group demoTable">--%>
+    <%--<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>--%>
+    <%--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>--%>
+    <%--<button class="layui-btn" data-type="isAll">验证是否全选</button>--%>
+<%--</div>--%>
+<table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>
 <script>
-    $(function () {
-        $("#submit_search").click(function () {
+    layui.use('table', function () {
+        var table = layui.table
+        var tableIns = table.render({
+            elem: '#LAY_table_user'
+            ,loading: true
+            ,limit: 10 //默认采用60
+            , url: '/admin/sumbitSearch'
+            , cols: [[
+                {checkbox: true, fixed: true}
+                , {field: 'id', title: 'ID', width: 50, sort: true, fixed: true}
+                , {field: 'membernumber', title: '会员编号', width: 150}
+                , {field: 'sex', title: '性别', width: 80, sort: true}
+                , {field: 'membername', title: '会员姓名', width: 100}
+                , {field: 'phonenumber', title: '手机号', width: 120}
+                , {field: 'registdate', title: '注册日期', sort: true, width: 140}
+                , {field: 'birthdate', title: '出生日期', sort: true, width: 140}
+                , {field: 'consumptionsum', title: '累计消费', width: 100}
+                , {field: 'balance', title: '余额', width: 80}
+                , {field: 'remarks', title: '备注', width: 80}
+                , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
+            ]]
+            , id: 'testReload'
+            , page: true
+            , height: 315
+        });
+
+
+        $('#submit_search').on('click', function () {
             var num = $("#num").val();
             var phone = $("#phone").val();
             var mName = $("#mName").val();
-            console.log(num + phone + mName)
-            $.ajax({
-                type: "post",
-                data: ({num: num, phone: phone, mName: mName}),
-                url: ("sumbitSearch"),
-                dataType: "text",
-                success: function (d) {
-//                    layer.msg(d)
-                    alert(d)
+            tableIns.reload({
+                where: {
+                    num: num
+                    , phone: phone
+                    , mName: mName
                 }
-            })
-        })
-        layui.use('table', function(){
-            var table = layui.table;
-            //监听表格复选框选择
-            table.on('checkbox(demo)', function(obj){
-                console.log(obj)
-            });
-            //监听工具条
-            table.on('tool(demo)', function(obj){
-                var data = obj.data;
-                if(obj.event === 'detail'){
-                    layer.msg('ID：'+ data.id + ' 的查看操作');
-                } else if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        layer.close(index);
-                    });
-                } else if(obj.event === 'edit'){
-                    layer.alert('编辑行：<br>'+ JSON.stringify(data))
-                }
-            });
-
-            var $ = layui.$, active = {
-                getCheckData: function(){ //获取选中数据
-                    var checkStatus = table.checkStatus('idTest')
-                        ,data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
-                }
-                ,getCheckLength: function(){ //获取选中数目
-                    var checkStatus = table.checkStatus('idTest')
-                        ,data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
-                }
-                ,isAll: function(){ //验证是否全选
-                    var checkStatus = table.checkStatus('idTest');
-                    layer.msg(checkStatus.isAll ? '全选': '未全选')
-                }
-            };
-
-            $('.demoTable .layui-btn').on('click', function(){
-                var type = $(this).data('type');
-                active[type] ? active[type].call(this) : '';
             });
         });
     });

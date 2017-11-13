@@ -12,7 +12,7 @@
 <script type="text/javascript" src="${dep}/layer-v3.0.3/layer/layer.js"></script>
 
 <%--layui--%>
-<link rel="stylesheet" type="text/css" charset="utf-8"  href="${dep}/layui-v2.0.1/layui/css/layui.css" />
-<script type="text/javascript" src="${dep}/layui-v2.0.1/layui/layui.js"></script>
+<link rel="stylesheet" type="text/css" charset="utf-8"  href="${dep}/layui-v2.1.7/layui/css/layui.css" />
+<script type="text/javascript" src="${dep}/layui-v2.1.7/layui/layui.js"></script>
 
 <script type="text/javascript" src="${js}/ssm.js"></script>

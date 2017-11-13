@@ -40,8 +40,9 @@ public class ManagerController {
         return "manager/seeMember";
     }
     @ResponseBody
-    @RequestMapping(value = "/sumbitSearch",produces={"text/html;charset=UTF-8;","application/json;"})
-    public String sumbitSearch(String  num ,String mName ,String  phone){
+    @RequestMapping(value = "/sumbitSearch")
+    public String sumbitSearch(String  num ,String mName ,String  phone,Integer page,Integer limit){
+        System.out.println(num+mName+phone+page+limit);
         return adminService.sumbitSearch(num,mName,phone);
     }
 

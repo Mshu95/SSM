@@ -10,6 +10,7 @@
     <style>
         #iframe_div{
             width: 100%;
+            height: 100% !important;
         }
     </style>
 </head>

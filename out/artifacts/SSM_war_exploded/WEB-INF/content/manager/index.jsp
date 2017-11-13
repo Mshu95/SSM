@@ -10,6 +10,10 @@
     <style>
         #iframe_div{
             width: 100%;
+            height: 100% !important;
+        }
+        .layui-footer{
+            display: none !important;
         }
     </style>
 </head>
