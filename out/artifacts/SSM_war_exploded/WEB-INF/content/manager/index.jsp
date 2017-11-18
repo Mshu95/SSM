@@ -12,9 +12,6 @@
             width: 100%;
             height: 100% !important;
         }
-        .layui-footer{
-            display: none !important;
-        }
     </style>
 </head>
 <body class="layui-layout-body">

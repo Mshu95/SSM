@@ -3,10 +3,7 @@ package service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.sun.tracing.dtrace.Attributes;
-import entity.Admin;
-import entity.Member;
-import entity.Page;
-import entity.Record;
+import entity.*;
 import mapper.AdminMapper;
 import mapper.MemberMapper;
 import mapper.RecordMapper;
@@ -22,7 +19,9 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 5)
 @Service
@@ -104,7 +103,7 @@ public class AdminServiceImpl implements AdminService {
         return "添加成功";
     }
 
-    public String sumbitSearch(String num, String mName, String phone) {
+    public String sumbitSearch(String num, String mName, String phone,Integer page,Integer limit) {
         Member member = new Member();
         if (num!=null){
             member.setMembernumber(num);
@@ -114,13 +113,22 @@ public class AdminServiceImpl implements AdminService {
             member.setPhonenumber(phone);
         }
         try{
-            List<Member> list = memberMapper.selectBy(member);
-            Page page =  new Page();
-            page.setCode(0);
-            page.setCount(1000);
-            page.setMsg("hi");
-            page.setData(list);
-            return JSON.toJSONString(page);
+
+            Pages pagess = new Pages();
+            pagess.setCurrentPage(page);
+            Integer count =  memberMapper.countByMember(member);
+            pagess.setTotalNumber(count);
+
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("msgs",member);
+            map.put("pages",pagess);
+            List<Member> list = memberMapper.selectByLike(map);
+            Page pages =  new Page();
+            pages.setCode(0);
+            pages.setCount(1000);
+            pages.setMsg("hi");
+            pages.setData(list);
+            return JSON.toJSONString(pages);
         }catch (Exception e){
             System.out.println(e);
         }

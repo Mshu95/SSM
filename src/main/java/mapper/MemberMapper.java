@@ -5,9 +5,11 @@ import entity.MemberExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberMapper {
     int countByExample(MemberExample example);
+    int countByMember(Member member);
 
     int deleteByExample(MemberExample example);
 
@@ -22,6 +24,8 @@ public interface MemberMapper {
     List<Member> selectByExample(MemberExample example);
 
     List<Member> selectBy(Member member);
+
+    List<Member> selectByLike(Map<String,Object> map);
 
     Member selectByPrimaryKey(Integer id);
 

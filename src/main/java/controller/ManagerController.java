@@ -43,7 +43,7 @@ public class ManagerController {
     @RequestMapping(value = "/sumbitSearch")
     public String sumbitSearch(String  num ,String mName ,String  phone,Integer page,Integer limit){
         System.out.println(num+mName+phone+page+limit);
-        return adminService.sumbitSearch(num,mName,phone);
+        return adminService.sumbitSearch(num,mName,phone,page,limit);
     }
 
 }
