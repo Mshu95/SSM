@@ -42,7 +42,6 @@ public class ManagerController {
     @ResponseBody
     @RequestMapping(value = "/sumbitSearch")
     public String sumbitSearch(String  num ,String mName ,String  phone,Integer page,Integer limit){
-        System.out.println(num+mName+phone+page+limit);
         return adminService.sumbitSearch(num,mName,phone,page,limit);
     }
 

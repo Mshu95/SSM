@@ -12,6 +12,43 @@
             width: 100%;
             height: 100% !important;
         }
+        .layui-body {
+            position: static !important;
+             left: 0px;
+            width: 100%;
+            height: auto;
+        }
+
+        .layui-layout-admin .layui-body {
+            top: 60px;
+            bottom: 0px;
+        }
+
+        body{
+            text-align: center;
+        }
+        .layui-nav-item  div{
+            width: 100px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #777;
+            font-family: cursive;
+            font-size: 17px;
+        }
+        iframe{
+            width: 100%;
+            height: 550px;
+        }
+        /*#seeMember_li:after {*/
+            /*position: absolute;*/
+            /*left: 0;*/
+            /*top: 0;*/
+            /*width: 0;*/
+            /*height: 5px;*/
+            /*background-color: #5FB878;*/
+            /*transition: all .2s;*/
+            /*-webkit-transition: all .2s;*/
+        /*}*/
     </style>
 </head>
 <body class="layui-layout-body">
@@ -20,17 +57,9 @@
         <div class="layui-logo">layui 后台布局</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
+            <li class="layui-nav-item" id="seeMember_li"><div  id="seeMember">查看会员</div></li>
+            <li class="layui-nav-item"><div id="regist">会员注册</div></li>
+            <li class="layui-nav-item"><div id="">用户</div></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -47,55 +76,30 @@
         </ul>
     </div>
 
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">所有商品</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">添加会员</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">管理会员</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">修改会员资料</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>
-            </ul>
-        </div>
-    </div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <%--<div style="padding: 15px;">--%>
-            <%--<iframe  id="iframe_div" src="/admin/addMember">--%>
-            <%--</iframe>--%>
-                <iframe  id="iframe_div" src="/admin/seeMember">
-                </iframe>
-        </div>
+        <iframe  id="iframe_div1" class="lay_iframe"  src="/admin/addMember">
+        </iframe>
+        <iframe  id="iframe_div2" class="lay_iframe" src="/admin/seeMember">
+        </iframe>
     </div>
+</div>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
-    </div>
 </div>
 <script>
     $(function(){
+        $(".lay_iframe").hide();
+        $("#iframe_div2").show()
 
-       var height =  document.body.clientHeight;
-       console.log(height)
-        $("#iframe_div").height(height-140+"px");
-
+        $("#regist").click(function(){
+            $(".lay_iframe").hide();
+            $("#iframe_div1").show()
+        })
+        $("#seeMember").click(function(){
+            $(".lay_iframe").hide();
+            $("#iframe_div2").show()
+        })
     })
     layui.use('element', function(){
         var element = layui.element;

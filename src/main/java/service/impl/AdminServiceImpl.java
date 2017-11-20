@@ -118,6 +118,7 @@ public class AdminServiceImpl implements AdminService {
             pagess.setCurrentPage(page);
             Integer count =  memberMapper.countByMember(member);
             pagess.setTotalNumber(count);
+            pagess.setDbNumber(limit);
 
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("msgs",member);
@@ -125,7 +126,7 @@ public class AdminServiceImpl implements AdminService {
             List<Member> list = memberMapper.selectByLike(map);
             Page pages =  new Page();
             pages.setCode(0);
-            pages.setCount(1000);
+            pages.setCount(pagess.getTotalNumber());
             pages.setMsg("hi");
             pages.setData(list);
             return JSON.toJSONString(pages);

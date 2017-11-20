@@ -32,12 +32,19 @@
         input[name="price_min"] {
             width: 100%;
         }
+        .layui-form{
+            width: 37%;
+            margin: 0px auto;
+        }
+        .layui-input, .layui-textarea {
+            display: block;
+            width: 69%;
+            padding-left: 10px;
+        }
     </style>
 </head>
 <body>
-<blockquote class="layui-elem-quote layui-text">
-    <span class="addFont">添加会员</span>
-</blockquote>
+<br><br>
 <form class="layui-form" action="">
     <div class="layui-form-item">
         <label class="layui-form-label">卡号</label>

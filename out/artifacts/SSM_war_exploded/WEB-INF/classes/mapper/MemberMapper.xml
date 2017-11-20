@@ -110,13 +110,13 @@
         <include refid="Base_Column_List"/>
         from member
         <where>
-            <if test="membernumber != null and !&quot;&quot;.equals(membernumber.trim())">
+            <if test="msgs.membernumber != null and !&quot;&quot;.equals(msgs.membernumber.trim())">
                 and memberNumber LIKE '%' #{msgs.membernumber} '%'
             </if>
-            <if test="phonenumber != null and !&quot;&quot;.equals(phonenumber.trim())">
+            <if test="msgs.phonenumber != null and !&quot;&quot;.equals(msgs.phonenumber.trim())">
                 and phoneNumber LIKE '%' #{msgs.phonenumber} '%'
             </if>
-            <if test="membernumber != null and !&quot;&quot;.equals(membernumber.trim())">
+            <if test="msgs.membername != null and !&quot;&quot;.equals(msgs.membername.trim())">
                 and memberName LIKE '%' #{msgs.membername} '%'
             </if>
         </where>
