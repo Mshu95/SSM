@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 public class Record {
     private Integer id;
 
@@ -10,6 +12,8 @@ public class Record {
     private Integer balance;
 
     private String remarks;
+
+    private Date time;
 
     public Integer getId() {
         return id;
@@ -49,5 +53,13 @@ public class Record {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks == null ? null : remarks.trim();
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }

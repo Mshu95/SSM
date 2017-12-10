@@ -59,7 +59,7 @@
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item" id="seeMember_li"><div  id="seeMember">查看会员</div></li>
             <li class="layui-nav-item"><div id="regist">会员注册</div></li>
-            <li class="layui-nav-item"><div id="">用户</div></li>
+            <li class="layui-nav-item"><div id="transaction">交易</div></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -83,6 +83,8 @@
         </iframe>
         <iframe  id="iframe_div2" class="lay_iframe" src="/admin/seeMember">
         </iframe>
+        <iframe  id="iframe_div3" class="lay_iframe" src="/admin/toTransaction">
+        </iframe>
     </div>
 </div>
 
@@ -99,6 +101,10 @@
         $("#seeMember").click(function(){
             $(".lay_iframe").hide();
             $("#iframe_div2").show()
+        })
+        $("#transaction").click(function(){
+            $(".lay_iframe").hide();
+            $("#iframe_div3").show()
         })
     })
     layui.use('element', function(){

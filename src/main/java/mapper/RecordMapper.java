@@ -1,13 +1,16 @@
 package mapper;
 
+import entity.Member;
 import entity.Record;
 import entity.RecordExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RecordMapper {
     int countByExample(RecordExample example);
+    int countByMember(Integer memberId);
 
     int deleteByExample(RecordExample example);
 
@@ -16,6 +19,8 @@ public interface RecordMapper {
     int insert(Record record);
 
     int insertSelective(Record record);
+
+    List<Record> getByMember(Map<String,Object> map);
 
     List<Record> selectByExample(RecordExample example);
 
