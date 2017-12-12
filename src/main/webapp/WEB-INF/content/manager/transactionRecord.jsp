@@ -67,14 +67,14 @@
             <div>姓名：${item.membername}</div>
         </td>
         <td>姓名：${item.sex}</td>
-        <td>生日:${item.birthdate}</td>
-        <td>会员编号:${item.membernumber}</td>
-    </tr>
-    <tr>
-        <td>手机号：${item.phonenumber}</td>
-
         <td>余额:${item.balance}元</td>
         <td>累计消费：${item.consumptionsum}</td>
+    </tr>
+    <tr>
+        <td>会员编号:${item.membernumber}</td>
+
+        <td>生日:<ex:DateFormat date="${item.birthdate}"/></td>
+        <td>手机号：${item.phonenumber}</td>
     </tr>
 </table>
 <button class="layui-btn" id="tran_">交易</button>
@@ -167,25 +167,6 @@
         updateTime();
     });
 
-    function updateTime() {
-        $(".laytable-cell-1-time").each(function (index, item) {
-            console.log($(this).text())
-//            $(this).text( formatDate($(this).text()))
-            console.log()
-
-        })
-    }
-
-    function formatDate(now) {
-        var year = now.getFullYear(),
-            month = now.getMonth() + 1,
-            date = now.getDate(),
-            hour = now.getHours(),
-            minute = now.getMinutes(),
-            second = now.getSeconds();
-
-        return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
-    }
 </script>
 </body>
 </html>

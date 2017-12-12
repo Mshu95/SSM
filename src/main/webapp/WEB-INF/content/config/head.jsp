@@ -1,4 +1,5 @@
 <%@ include file="/WEB-INF/content/config/taglib.jsp"%>
+<%@ taglib prefix="ex" uri="/WEB-INF/tld/date.tld"%>
 
 <script type="text/javascript" src="${js}/jquery-1.12.3.min.js"></script>
 <link rel="shortcut icon" href="${img}/login/tou.png" type="image/x-icon" />
@@ -16,3 +17,4 @@
 <script type="text/javascript" src="${dep}/layui-v2.1.7/layui/layui.js"></script>
 
 <script type="text/javascript" src="${js}/ssm.js"></script>
+<link rel="stylesheet" type="text/css" charset="utf-8"  href="${css}/ssm.css" />

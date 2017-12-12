@@ -188,11 +188,12 @@ public class AdminServiceImpl implements AdminService {
             if(member.getBalance()<0){
                 return "余额不足，拒绝交易！";
             }else{
-                memberMapper.updateByPrimaryKeySelective(member);
                 Record record = new Record();
                 record.setTime(new Date());
                 if ("consume".equals(open)) {
                     record.setPay(-price);
+                    Integer Consumptionsum=member.getConsumptionsum()==null?0:member.getConsumptionsum();
+                    member.setConsumptionsum(Consumptionsum+price);
                 } else if ("recharge".equals(open)) {
                     record.setPay(price);
                 }
@@ -200,9 +201,11 @@ public class AdminServiceImpl implements AdminService {
                 record.setMemberid(mid);
                 record.setBalance(member.getBalance());
                 recordMapper.insert(record);
+                memberMapper.updateByPrimaryKeySelective(member);
             }
 
         }catch (Exception e){
+            System.out.println(e);
             return "交易异常";
         }
         return "交易成功";

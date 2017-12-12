@@ -81,7 +81,6 @@
                 , {field: 'membername', title: '会员姓名', width: 100}
                 , {field: 'phonenumber', title: '手机号', width: 120}
                 , {field: 'registdate', title: '注册日期', sort: true, width: 170}
-                , {field: 'consumptionsum', title: '累计消费', width: 100}
                 , {field: 'balance', title: '余额', width: 80}
                 , {field: 'remarks', title: '备注', width: 80}
                 , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
