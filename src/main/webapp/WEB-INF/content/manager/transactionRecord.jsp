@@ -57,6 +57,20 @@
             top: 41px;
             right: 13%;
         }
+
+        .laytable-cell-1-right {
+            text-align: center;
+        }
+
+        .open_div {
+            width: 20%;
+            height: 90%;
+            background-color: white;
+            padding: 20px 30%;
+        }
+        .layui-layer-demo{
+            top: 20%;
+        }
     </style>
 </head>
 <body>
@@ -80,10 +94,27 @@
 <button class="layui-btn" id="tran_">交易</button>
 <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>
+<div class="open_div">
+
+    <table class="table table-bordered">
+        <tr>
+            <td>支出</td>
+            <td class="pay_">支出</td>
+        </tr>
+        <tr>
+            <td>日期</td>
+            <td class="data_transcation">支出</td>
+        </tr>
+        <tr>
+            <td>支出</td>
+            <td class="remark_">支出</td>
+        </tr>
+    </table>
+</div>
+
 <script>
     var mId = '${item.id}'
     $(function () {
@@ -110,29 +141,29 @@
     layui.use('table', function () {
         var table = layui.table
         var tableIns = table.render({
-            elem: '#LAY_table_user'
-            , loading: true
-            , limit: 10 //默认采用60
-            , url: '/admin/getTransactionDetail?id=' + mId
-            , cols: [[
-                {field: 'id', title: 'ID', width: 50, sort: true, fixed: true}
-                , {field: 'pay', title: '支出', width: 150}
-                , {field: 'balance', title: '余额', width: 80, sort: true}
-                , {field: 'remarks', title: '备注', width: 180}
-                , {field: 'time', title: '日期', width: 140}
-                , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
-            ]]
-            , id: 'testReload'
-            , page: true
-            , height: 315
-            , done:function () {
-                    $(".laytable-cell-1-time").each(function(index,item){
-                        if(index>0){
-                                $(this).text(formatDate_ssm($(this).text(),"年","月","日"))
+                elem: '#LAY_table_user'
+                , loading: true
+                , limit: 10 //默认采用60
+                , url: '/admin/getTransactionDetail?id=' + mId
+                , cols: [[
+                    {field: 'id', title: 'ID', width: 50, sort: true, fixed: true}
+                    , {field: 'pay', title: '支出', width: 150}
+                    , {field: 'balance', title: '余额', width: 80, sort: true}
+                    , {field: 'remarks', title: '备注', width: 180}
+                    , {field: 'time', title: '日期', width: 140}
+                    , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
+                ]]
+                , id: 'testReload'
+                , page: true
+                , height: 315
+                , done: function () {
+                    $(".laytable-cell-1-time").each(function (index, item) {
+                        if (index > 0) {
+                            $(this).text(formatDate_ssm($(this).text(), "年", "月", "日"))
                         }
                     })
-            }
-    })
+                }
+            })
         ;
 
         $('#submit_search').on('click', function () {
@@ -161,12 +192,24 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.alert('编辑行：<br>' + JSON.stringify(data))
+                var d = eval("(" + JSON.stringify(data) + ')')
+                var cloneBody = $(".open_div").clone();
+                var html_ = "";
+                cloneBody.find(".pay_").text(d.id)
+                html_=cloneBody.html();
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    content: 'html内容'
+                });
+
+
+                //iframe窗
+//                layer.alert('编辑行：<br>' + JSON.stringify(data))
             }
         });
-        updateTime();
     });
-
 </script>
 </body>
 </html>

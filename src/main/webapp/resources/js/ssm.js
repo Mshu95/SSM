@@ -3,7 +3,12 @@ function formatDate_ssm(time, years, mouths, dates, hours, miuntes, secounts) {
     if (flag) {
         time = new Date(time / 1000)
     }
-    return formatDates_ssm(time, years, mouths, dates, hours, miuntes, secounts)
+    try{
+        return formatDates_ssm(time, years, mouths, dates, hours, miuntes, secounts)
+    }catch (e){
+        console.log(e)
+    }
+
 }
 
 function formatDates_ssm(now, years, mouths, dates, hours, minutes, seconds) {

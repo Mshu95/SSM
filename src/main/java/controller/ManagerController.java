@@ -75,6 +75,11 @@ public class ManagerController {
         return adminService.submitRecord(open,price,remarks,mId);
     }
 
+    @RequestMapping(value = "/motifyRcord",produces = {"text/html;charset=UTF-8;","application/json;"})
+    public String motifyRecord(){
+        return "manager/motifyRecord";
+    }
+
 
 }
 

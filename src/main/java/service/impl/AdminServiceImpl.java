@@ -144,12 +144,13 @@ public class AdminServiceImpl implements AdminService {
     public String transactionDetail(Integer id, Integer page, Integer limit) {
         Pages pages = new Pages();
         Integer total;
+        pages.setCurrentPage(page);
+
         if (id != null) {
             total = recordMapper.countByMember(id);
-            pages.setTotalPage(total);
+            pages.setTotalNumber(total);
         }
         pages.setDbNumber(limit);
-        pages.setCurrentPage(page);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("msgs", id);

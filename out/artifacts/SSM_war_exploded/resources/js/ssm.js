@@ -1,13 +1,14 @@
 function formatDate_ssm(time, years, mouths, dates, hours, miuntes, secounts) {
-    try {
-        var flag = /^\d+$/.test(time);
-        if (flag) {
-            time = new Date(time / 1000)
-        }
-        return formatDates_ssm(time, years, mouths, dates, hours, miuntes, secounts)
-    }catch(e) {
+    var flag = /^\d+$/.test(time);
+    if (flag) {
+        time = new Date(time / 1000)
     }
-
+    try{
+        return formatDates_ssm(time, years, mouths, dates, hours, miuntes, secounts)
+    }catch (e){
+        console.log(e)
+    }
+   
 }
 
 function formatDates_ssm(now, years, mouths, dates, hours, minutes, seconds) {
