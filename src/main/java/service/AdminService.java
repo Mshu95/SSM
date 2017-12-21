@@ -11,4 +11,5 @@ public interface AdminService {
     String transactionDetail(Integer id,Integer page,Integer limit);
     Member getMemberByID(Integer mId);
     String  submitRecord(String open,Integer price,String remarks,Integer mid);
+    String  motifyRecord(Integer open_pay,String open_remark,Integer currentRecordId);
     }

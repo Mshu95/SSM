@@ -45,6 +45,7 @@
             margin-bottom: 20px;
             margin: 0px auto;
             text-align: center;
+            table-layout:fixed;
         }
 
         .img-thumbnail {
@@ -68,8 +69,32 @@
             background-color: white;
             padding: 20px 30%;
         }
-        .layui-layer-demo{
+
+        .layui-layer-demo {
             top: 20%;
+        }
+
+        .layui-layer {
+            top: 20% !important;
+        }
+
+        .set_sub {
+            right: 20%;
+            position: absolute;
+        }
+
+        .table-bordered {
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        .remark_{
+            height: 80px !important;
+            overflow-y: scroll;
+            word-wrap:break-word;word-break:break-all;
+        }
+        .open_div{
+            height: 0px;
+            overflow-y: hidden;
         }
     </style>
 </head>
@@ -99,24 +124,27 @@
 </script>
 <div class="open_div">
 
-    <table class="table table-bordered">
+    <table class="table table-hover">
         <tr>
             <td>支出</td>
-            <td class="pay_">支出</td>
+            <td class="pay_" contentEditable="true"></td>
         </tr>
         <tr>
             <td>日期</td>
-            <td class="data_transcation">支出</td>
+            <td class="data_transcation"></td>
         </tr>
         <tr>
-            <td>支出</td>
-            <td class="remark_">支出</td>
+            <td>备注</td>
+            <td class="" ><textarea class="remark_ form-control" rows="3"></textarea></td>
         </tr>
     </table>
+    <button class="layui-btn set_sub submit_motify">提交</button>
 </div>
 
 <script>
     var mId = '${item.id}'
+    var currentRecordId;
+
     $(function () {
         $("#tran_").click(function () {
             //iframe窗
@@ -137,6 +165,8 @@
             $(".layui-layer-min").css("display", "none")
             $(".layui-layer").css("box-shadow", "1px 1px 20px 12px rgba(0,0,0,.3)")
         })
+
+
     })
     layui.use('table', function () {
         var table = layui.table
@@ -180,6 +210,10 @@
         });
 
 
+
+
+
+
         //监听工具条
         table.on('tool(user)', function (obj) {
             var data = obj.data;
@@ -193,20 +227,42 @@
                 });
             } else if (obj.event === 'edit') {
                 var d = eval("(" + JSON.stringify(data) + ')')
+                currentRecordId=d.id;
                 var cloneBody = $(".open_div").clone();
                 var html_ = "";
-                cloneBody.find(".pay_").text(d.id)
-                html_=cloneBody.html();
+                cloneBody.find(".data_transcation").text(formatDate_ssm(d.time, "年", "月", "日")).addClass("open_data_transcation")
+                cloneBody.find(".remark_").text(d.remarks).addClass("open_remark")
+                cloneBody.find(".pay_").text(d.pay).addClass("open_pay")
+                html_ = cloneBody.html();
                 layer.open({
                     type: 1,
-                    skin: 'layui-layer-rim', //加上边框
-                    area: ['420px', '240px'], //宽高
-                    content: 'html内容'
+                    title: ['修改'],
+                    closeBtn: 1,
+                    anim: 1,
+                    skin: 'layui-layer-demo', //样式类名
+                    anim: 2,
+                    shadeClose: true, //开启遮罩关闭
+                    offset: 'auto',
+                    area: ['60%', '50%'],
+                    content: html_
                 });
+                $('.submit_motify').on('click', function () {
+                    var open_pay = $(".open_pay").text();
+                    var open_remark = $(".open_remark").text();
+                    var open_data_transcation = $(".open_data_transcation").text();
+                    currentRecordId;
+                    $.ajax({
+                        type:'post',
+                        url:'/admin/motifyRcord',
+                        data:({open_pay:open_pay,open_remark:open_remark,open_data_transcation:open_data_transcation,currentRecordId:currentRecordId}),
+                        datatType:'',
+                        success:(function(d){
+                            layer.msg(d)
+                            setTimeout('window.location.reload()',2000)
+                        })
+                    })
 
-
-                //iframe窗
-//                layer.alert('编辑行：<br>' + JSON.stringify(data))
+                });
             }
         });
     });

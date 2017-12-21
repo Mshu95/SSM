@@ -74,10 +74,10 @@ public class ManagerController {
     public String submitRecord(String open,Integer price,String remarks,Integer mId){
         return adminService.submitRecord(open,price,remarks,mId);
     }
-
+    @ResponseBody
     @RequestMapping(value = "/motifyRcord",produces = {"text/html;charset=UTF-8;","application/json;"})
-    public String motifyRecord(){
-        return "manager/motifyRecord";
+    public String motifyRecord(Integer open_pay,String open_remark,Integer currentRecordId){
+        return adminService.motifyRecord(open_pay,open_remark,currentRecordId);
     }
 
 

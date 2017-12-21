@@ -212,4 +212,28 @@ public class AdminServiceImpl implements AdminService {
         return "交易成功";
 
     }
+
+    @Override
+    public String motifyRecord(Integer open_pay, String open_remark, Integer currentRecordId) {
+        Record record = recordMapper.selectByPrimaryKey(currentRecordId);
+        Integer memberId = record.getMemberid();
+        Member member = memberMapper.selectByPrimaryKey(memberId);
+        member.setBalance(member.getBalance()+(open_pay-record.getPay()));
+        if(record.getPay()<0&&open_pay+record.getPay()<0){
+            if(open_pay>0){
+                member.setConsumptionsum(member.getConsumptionsum()+(open_pay+record.getPay()));
+            }else{
+                member.setConsumptionsum(member.getConsumptionsum()+(record.getPay()-open_pay));
+            }
+
+        }
+        memberMapper.updateByPrimaryKey(member);
+        record.setPay(open_pay);
+        record.setRemarks(open_remark);
+        int result_r = recordMapper.updateByPrimaryKey(record);
+        if(result_r==1){
+            return "修改成功";
+        }
+        return "修改失败";
+    }
 }
