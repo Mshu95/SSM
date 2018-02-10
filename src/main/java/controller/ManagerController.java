@@ -80,6 +80,13 @@ public class ManagerController {
         return adminService.motifyRecord(open_pay,open_remark,currentRecordId);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "delRcord",produces = {"text/html;charset=UTF-8","application/json;"})
+    String delRecord(Integer rId){
+        return adminService.delRecord(rId).toString();
+    }
+
+
 
 }
 

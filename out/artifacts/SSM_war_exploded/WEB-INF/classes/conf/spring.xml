@@ -8,8 +8,10 @@
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context.xsd">
     
-    <!-- 扫描文件（自动将servicec层注入） -->
+    <!-- 扫描文件（自动将service层注入） -->
+    <context:component-scan base-package="utilssm"/>
     <context:component-scan base-package="service.impl"/>
+
     <!-- 作业调度器Quartz的配置。定义触发器来管理任务Bean,cronExpression指定Cron表达式：周一到周五7点、12点执行调度-->
 	<!--<bean id="cronTriggerPunch" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" p:cronExpression="0 36 10 ? * MON-FRI">-->
 		<!--<property name="jobDetail">-->

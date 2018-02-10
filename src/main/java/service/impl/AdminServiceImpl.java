@@ -1,23 +1,18 @@
 package service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.sun.org.apache.regexp.internal.RE;
-import com.sun.tracing.dtrace.Attributes;
 import entity.*;
 import mapper.AdminMapper;
 import mapper.MemberMapper;
 import mapper.RecordMapper;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import service.AdminService;
-
+import utilssm.ChangeMoney;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -216,24 +211,48 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public String motifyRecord(Integer open_pay, String open_remark, Integer currentRecordId) {
         Record record = recordMapper.selectByPrimaryKey(currentRecordId);
-        Integer memberId = record.getMemberid();
-        Member member = memberMapper.selectByPrimaryKey(memberId);
-        member.setBalance(member.getBalance()+(open_pay-record.getPay()));
-        if(record.getPay()<0&&open_pay+record.getPay()<0){
-            if(open_pay>0){
-                member.setConsumptionsum(member.getConsumptionsum()+(open_pay+record.getPay()));
-            }else{
-                member.setConsumptionsum(member.getConsumptionsum()+(record.getPay()-open_pay));
+        if(changeMoneyByRecord(currentRecordId,open_pay)==1){
+            record.setPay(open_pay);
+            record.setRemarks(open_remark);
+            int result_r = recordMapper.updateByPrimaryKey(record);
+            if(result_r==1){
+                return "修改成功";
             }
-
-        }
-        memberMapper.updateByPrimaryKey(member);
-        record.setPay(open_pay);
-        record.setRemarks(open_remark);
-        int result_r = recordMapper.updateByPrimaryKey(record);
-        if(result_r==1){
-            return "修改成功";
         }
         return "修改失败";
+    }
+
+    @Override
+    public Integer delRecord(Integer rId) {
+       Record  record =  recordMapper.selectByPrimaryKey(rId);
+       try {
+           Member member = memberMapper.selectByPrimaryKey(record.getMemberid());
+           member.setBalance(member.getBalance()-record.getPay());
+           memberMapper.updateByPrimaryKey(member);
+           return recordMapper.deleteByPrimaryKey(rId);
+       }catch (Exception e){
+           return 0;
+       }
+    }
+
+    public   Integer changeMoneyByRecord(Integer rId,Integer changeMoney){
+        try{
+            Record record = recordMapper.selectByPrimaryKey(rId);
+            Integer memberId = record.getMemberid();
+            Member member  = memberMapper.selectByPrimaryKey(memberId);
+            member.setBalance(member.getBalance()+changeMoney-record.getPay());
+            if(record.getPay()<0&&changeMoney+record.getPay()<0){
+                if(changeMoney>0){
+                    member.setConsumptionsum(member.getConsumptionsum()+(changeMoney+record.getPay()));
+                }else{
+                    member.setConsumptionsum(member.getConsumptionsum()+(record.getPay()-changeMoney));
+                }
+            }
+            memberMapper.updateByPrimaryKey(member);
+            return 1;
+        }catch (Exception e ){
+            System.out.println(e);
+            return 0;
+        }
     }
 }

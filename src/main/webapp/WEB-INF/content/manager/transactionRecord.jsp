@@ -45,7 +45,7 @@
             margin-bottom: 20px;
             margin: 0px auto;
             text-align: center;
-            table-layout:fixed;
+            table-layout: fixed;
         }
 
         .img-thumbnail {
@@ -87,13 +87,16 @@
             margin-bottom: 10px;
             margin-top: 10px;
         }
-        .remark_{
+
+        .remark_ {
             height: 80px !important;
             overflow-y: scroll;
-            word-wrap:break-word;word-break:break-all;
+            word-wrap: break-word;
+            word-break: break-all;
         }
-        .open_div{
-            height: 0px;
+
+        .open_div {
+            height: 0px !important;
             overflow-y: hidden;
         }
     </style>
@@ -123,7 +126,6 @@
     <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>
 <div class="open_div">
-
     <table class="table table-hover">
         <tr>
             <td>支出</td>
@@ -135,7 +137,7 @@
         </tr>
         <tr>
             <td>备注</td>
-            <td class="" ><textarea class="remark_ form-control" rows="3"></textarea></td>
+            <td class=""><textarea class="remark_ form-control" rows="3"></textarea></td>
         </tr>
     </table>
     <button class="layui-btn set_sub submit_motify">提交</button>
@@ -209,11 +211,6 @@
             });
         });
 
-
-
-
-
-
         //监听工具条
         table.on('tool(user)', function (obj) {
             var data = obj.data;
@@ -222,12 +219,29 @@
                 window.location.href = "/admin/transaction"
             } else if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
+                    var d = eval("(" + JSON.stringify(data) + ')')
+                    currentRecordId = d.id;
+                    $.ajax({
+                        type: "post",
+                        url: "/admin/delRcord",
+                        data:({rId:currentRecordId}),
+                        dataType:'text',
+                        success:(function(d){
+                            if(d=='1'){
+                                obj.del();
+                                layer.msg("删除成功")
+                                setTimeout('window.location.reload()',1000)
+                            }else{
+                                layer.msg("删除失败")
+                            }
+
+                        })
+                    })
+
                 });
             } else if (obj.event === 'edit') {
                 var d = eval("(" + JSON.stringify(data) + ')')
-                currentRecordId=d.id;
+                currentRecordId = d.id;
                 var cloneBody = $(".open_div").clone();
                 var html_ = "";
                 cloneBody.find(".data_transcation").text(formatDate_ssm(d.time, "年", "月", "日")).addClass("open_data_transcation")
@@ -252,13 +266,18 @@
                     var open_data_transcation = $(".open_data_transcation").text();
                     currentRecordId;
                     $.ajax({
-                        type:'post',
-                        url:'/admin/motifyRcord',
-                        data:({open_pay:open_pay,open_remark:open_remark,open_data_transcation:open_data_transcation,currentRecordId:currentRecordId}),
-                        datatType:'',
-                        success:(function(d){
+                        type: 'post',
+                        url: '/admin/motifyRcord',
+                        data: ({
+                            open_pay: open_pay,
+                            open_remark: open_remark,
+                            open_data_transcation: open_data_transcation,
+                            currentRecordId: currentRecordId
+                        }),
+                        datatType: '',
+                        success: (function (d) {
                             layer.msg(d)
-                            setTimeout('window.location.reload()',2000)
+                            setTimeout('window.location.reload()', 2000)
                         })
                     })
 
